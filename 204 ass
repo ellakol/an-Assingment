@@ -1,0 +1,208 @@
+
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+class SingleLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def display(self):
+        elements = []
+        current = self.head
+        while current:
+            elements.append(current.data)
+            current = current.next
+        return elements
+
+if __name__ == "__main__":
+    data_list = [1, 3, 4, 5, 6, 8, 7, 9, 2, 22, 15, 55, 45, 23, 24, 26, 28]
+    
+    linked_list = SingleLinkedList()
+
+    for data in data_list:
+        linked_list.insert(data)
+
+    print("Inserted elements:", linked_list.display())
+
+class SingleLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def display(self):
+        elements = []
+        current = self.head
+        while current:
+            elements.append(current.data)
+            current = current.next
+        return elements
+
+    def find_max_min(self):
+        if not self.head:
+            return None, None
+
+        current = self.head
+        max_val = current.data
+        min_val = current.data
+
+        while current:
+            if current.data > max_val:
+                max_val = current.data
+            elif current.data < min_val:
+                min_val = current.data
+            current = current.next
+
+        return max_val, min_val
+
+    def convert_to_bst(self, data_list):
+        if not data_list:
+            return
+
+        data_list.sort()
+        self.head = None 
+
+        def convert_list_to_bst(left, right):
+            nonlocal data_list
+
+            if left > right:
+                return None
+
+            mid = (left + right) // 2
+            new_node = Node(data_list[mid])
+
+            new_node.left = convert_list_to_bst(left, mid - 1)
+            new_node.right = convert_list_to_bst(mid + 1, right)
+
+            return new_node
+
+        self.head = convert_list_to_bst(0, len(data_list) - 1)
+
+if __name__ == "__main__":
+    data_list = [1, 3, 4, 5, 6, 8, 7, 9, 2, 22, 15, 55, 45, 23, 24, 26, 28]
+
+    # Test find_max_min method
+    linked_list = SingleLinkedList()
+    for data in data_list:
+        linked_list.insert(data)
+
+    max_val, min_val = linked_list.find_max_min()
+    print("Maximum value:", max_val)
+    print("Minimum value:", min_val)
+
+    # Test convert_to_bst method
+    new_linked_list = SingleLinkedList()
+    new_linked_list.convert_to_bst(data_list)
+
+    print("Binary Search Tree converted from linked list:")
+    print(new_linked_list.display())
+class SingleLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    # Other methods (display, find_max_min, and convert_to_bst) from the previous implementation
+
+    def binary_search(self, key):
+        index = 0
+        current = self.head
+        while current:
+            if current.data == key:
+                return index
+            current = current.next
+            index += 1
+        return -1
+
+class Queue:
+    def __init__(self):
+        self.linked_list = SingleLinkedList()
+
+    def enqueue(self, data):
+        self.linked_list.insert(data)
+
+    def dequeue(self):
+        if not self.is_empty():
+            data = self.linked_list.head.data
+            self.linked_list.head = self.linked_list.head.next
+            return data
+        else:
+            print("Queue is empty.")
+            return None
+
+    def is_empty(self):
+        return self.linked_list.head is None
+
+    def display(self):
+
+        data_list = self.display()
+        sorted_list = sorted(data_list)
+        self.linked_list = SingleLinkedList()
+        for data in sorted_list:
+            self.enqueue(data)
+
+def test_binary_search():
+    data_list = [1, 3, 4, 5, 6, 8, 7, 9, 2, 22, 15, 55, 45, 23, 24, 26, 28]
+    linked_list = SingleLinkedList()
+
+    for data in data_list:
+        linked_list.insert(data)
+
+    key = 15
+    index = linked_list.binary_search(key)
+
+    if index != -1:
+        print(f"Found {key} at index {index}.")
+    else:
+        print(f"{key} not found in the linked list.")
+
+def test_queue():
+    queue = Queue()
+
+    # Test enqueue and display methods
+    for data in [1, 3, 5, 2, 4, 8, 7]:
+        queue.enqueue(data)
+
+    print("Queue elements:", queue.display())
+
+    # Test dequeue method
+    dequeued_data = queue.dequeue()
+    print("Dequeued element:", dequeued_data)
+    print("Updated Queue elements:", queue.display())
+
+    # Test sort method
+    queue.sort()
+    print("Sorted Queue elements:", queue.display())
+
+if __name__ == "__main__":
+    # Test Binary Search on an unsorted array
+    test_binary_search()
+
